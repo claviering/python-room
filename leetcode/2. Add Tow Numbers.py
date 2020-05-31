@@ -5,26 +5,41 @@ class ListNode:
         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode):
-        head = ListNode()
-        tail = head
-        next = 0 # 进位
-        while l1 or l2:
-            tmpNode = ListNode()
-            tmpSum = (l1.val if l1 else 0) + (l2.val if l2 else 0) + next
-            tmpNode.val = tmpSum % 10
-            next = tmpSum // 10
-            tail.next = tmpNode
-            tail = tail.next
-            if (l1):
+        l1Head = l1
+        l2Head = l2
+        carry = 0 # 进位
+        while l1 and l2:
+            tmpSum = l1.val + l2.val + carry
+            carry = tmpSum // 10
+            l1.val = tmpSum % 10
+            l2.val = tmpSum % 10
+            if not l1.next and not l2.next and carry:
+                l1.next = ListNode(1)
+                carry = 0
+            l1 = l1.next
+            l2 = l2.next
+        if (l1):
+            while carry > 0:
+                tmpSum = l1.val + carry
+                l1.val = tmpSum % 10
+                carry = tmpSum // 10
+                if (not l1.next and carry > 0):
+                    l1.next = ListNode(1)
+                    break
                 l1 = l1.next
-            if (l2):
+            return l1Head
+        elif l2:
+            while carry > 0:
+                tmpSum = l2.val + carry
+                l2.val = tmpSum % 10
+                carry = tmpSum // 10
+                if (not l2.next and carry > 0):
+                    l2.next = ListNode(1)
+                    break
                 l2 = l2.next
-        if (next):
-            tmpNode = ListNode()
-            tmpNode.val = next
-            tail.next = tmpNode
-            tail = tail.next
-        return head.next
+            return l2Head
+        else:
+            return l1Head
 
 def test1():
     a = ListNode(2, ListNode(4, ListNode(3)))
@@ -60,12 +75,32 @@ def test4():
     while s:
         print(s.val)
         s = s.next
+def test5():
+    a = ListNode(1)
+    b = ListNode(9, ListNode(9, ListNode(9)))
+    sol = Solution()
+    s = sol.addTwoNumbers(a, b)
+    while s:
+        print(s.val)
+        s = s.next
+def test6():
+    a = ListNode(0, ListNode(8, ListNode(6)))
+    b = ListNode(6, ListNode(7, ListNode(8)))
+    sol = Solution()
+    s = sol.addTwoNumbers(a, b)
+    while s:
+        print(s.val)
+        s = s.next
 
-print('test1')
-test1()
-print('test2')
-test2()
-print('test3')
-test3()
-print('test4')
-test4()
+# print('test1')
+# test1()
+# print('test2')
+# test2()
+# print('test3')
+# test3()
+# print('test4')
+# test4()
+# print('test5')
+# test5()
+print('test6')
+test6()
