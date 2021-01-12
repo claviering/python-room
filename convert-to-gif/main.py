@@ -10,7 +10,7 @@ argv = sys.argv[1:]
 opts = []
 inputFileName = ""
 outFileName = ""
-help = "usage: gifMaker -i <input iamge file>"
+help = "usage: python3 main.py -i <input iamge file>"
 
 def tips():
     print(help)
