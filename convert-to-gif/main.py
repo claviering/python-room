@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
+import os
 import sys
 import getopt
 from PIL import Image
@@ -8,7 +9,7 @@ from PIL import Image
 argv = sys.argv[1:]
 opts = []
 inputFileName = ""
-outFileName = "output.gif"
+outFileName = ""
 help = "usage: gifMaker -i <input iamge file>"
 
 def tips():
@@ -27,6 +28,9 @@ for opt, arg in opts:
         inputFileName = arg
     elif opt in ['-o']:
         outFileName = arg
+
+if len(outFileName) == 0:
+    outFileName = os.path.splitext(inputFileName)[0] + ".gif"
 
 if len(inputFileName) == 0:
     tips()
