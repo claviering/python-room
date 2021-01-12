@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+import sys
+import getopt
+from PIL import Image
+
+
+argv = sys.argv[1:]
+opts = []
+inputFileName = ""
+outFileName = "output.gif"
+help = "usage: gifMaker -i <input iamge file>"
+
+def tips():
+    print(help)
+    sys.exit(2)
+
+try:
+    opts, args = getopt.getopt(argv, "hi:o:")  # 短选项模式
+except:
+    tips()
+
+for opt, arg in opts:
+    if opt == '-h':
+      tips()
+    elif opt in ['-i']:
+        inputFileName = arg
+    elif opt in ['-o']:
+        outFileName = arg
+
+if len(inputFileName) == 0:
+    tips()
+image1 = Image.open(inputFileName)
+im1 = image1.convert('RGB')
+im1.save(outFileName)
